@@ -457,6 +457,34 @@
             transform: none;
         }
 
+        /* Auto username button */
+        .btn-auto-username {
+            width: 100%;
+            padding: 14px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            color: var(--gray-900);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-auto-username:hover {
+            background: var(--gray-200);
+            transform: translateY(-1px);
+        }
+
+        .btn-auto-username:active {
+            transform: translateY(0);
+        }
+
         /* Success Message */
         .success-message {
             display: none;
@@ -726,6 +754,12 @@
                 font-size: 14px;
             }
 
+            .btn-auto-username {
+                padding: 12px;
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+
             .success-icon {
                 font-size: 48px;
                 margin-bottom: 20px;
@@ -839,6 +873,9 @@
                         <h2 class="step-question">Ваш Telegram?</h2>
                     </div>
                     <input type="text" class="step-input" id="stepTelegram" placeholder="@username" autocomplete="username">
+                    <button class="btn-auto-username" onclick="fillTelegramUsername()">
+                        📱 Підставити мій @username
+                    </button>
                     <div class="step-buttons">
                         <button class="btn-back" onclick="goToStep(3)">Назад</button>
                         <button class="btn-next" id="nextStep4" disabled>Далі</button>
@@ -1018,6 +1055,32 @@
             document.getElementById('progressWrapper').style.display = 'block';
             currentFormStep = 1;
             goToStep(1);
+        }
+
+        // Auto-fill Telegram username
+        function fillTelegramUsername() {
+            const tg = window.Telegram.WebApp;
+            
+            // Отримуємо username з Telegram WebApp
+            if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                const username = tg.initDataUnsafe.user.username;
+                
+                if (username) {
+                    // Підставляємо username
+                    const telegramInput = document.getElementById('stepTelegram');
+                    telegramInput.value = '@' + username;
+                    
+                    // Тригеримо подію input для валідації
+                    const event = new Event('input', { bubbles: true });
+                    telegramInput.dispatchEvent(event);
+                    
+                    // Показуємо feedback
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else {
+                    // Якщо немає username - показуємо попередження
+                    tg.showAlert('У вас немає @username в Telegram. Введіть вручну або додайте username в налаштуваннях Telegram.');
+                }
+            }
         }
 
         // Navigate between steps
