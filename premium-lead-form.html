@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Анкета кандидата</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            /* Premium Dark Colors */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #15151f;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            
+            /* Neon Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-neon: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            
+            /* Glass Effect */
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            
+            /* Shadows */
+            --shadow-neon: 0 0 30px rgba(102, 126, 234, 0.3);
+            --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-strong);
+            z-index: 100;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-step {
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-neon);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-strong);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* Card Header */
+        .card-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: var(--gradient-neon);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            height: 56px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1), var(--shadow-neon);
+        }
+
+        .form-input.error {
+            border-color: #f5576c;
+            animation: shake 0.5s;
+        }
+
+        .form-input.success {
+            border-color: #00f2fe;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .error-message {
+            color: #f5576c;
+            font-size: 13px;
+            margin-top: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Vacancy Grid */
+        .vacancy-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .vacancy-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vacancy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .vacancy-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .vacancy-card:active {
+            transform: scale(0.98);
+        }
+
+        .vacancy-card.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .vacancy-card.selected::before {
+            opacity: 0.15;
+        }
+
+        .vacancy-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vacancy-icon {
+            font-size: 28px;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+        }
+
+        .vacancy-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .vacancy-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vacancy-salary {
+            color: #00f2fe;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .vacancy-description {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 24px;
+            display: inline-block;
+            animation: celebrate 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.5));
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
+        }
+
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: var(--gradient-success);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 375px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .glass-card {
+                padding: 24px;
+            }
+            
+            .card-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <span class="progress-step">Крок <strong id="current-step">1</strong> з <strong>6</strong></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Step 1: Welcome -->
+        <div class="glass-card" id="step-welcome">
+            <div class="card-header">
+                <div class="card-icon">💼</div>
+                <h2 class="card-title">Вітаємо!</h2>
+                <p class="card-subtitle">Заповніть анкету для працевлаштування</p>
+            </div>
+            <button class="btn btn-primary" onclick="startForm()">
+                Почати заповнення
+            </button>
+        </div>
+
+        <!-- Step 2: Select Vacancy -->
+        <div class="glass-card hidden" id="step-vacancy">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <h2 class="card-title">Оберіть вакансію</h2>
+                <p class="card-subtitle">Яка посада вас цікавить?</p>
+            </div>
+            <div class="vacancy-grid" id="vacancy-grid"></div>
+        </div>
+
+        <!-- Step 3: Name -->
+        <div class="glass-card hidden" id="step-name">
+            <div class="card-header">
+                <div class="card-icon">👤</div>
+                <h2 class="card-title">Ваше ім'я</h2>
+                <p class="card-subtitle">Як до вас звертатися?</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-name">Повне ім'я</label>
+                <input type="text" id="input-name" class="form-input" placeholder="Наприклад: Іван Петренко">
+                <div class="error-message" id="error-name">Будь ласка, введіть ім'я</div>
+            </div>
+            <button class="btn btn-primary" onclick="submitName()">Далі</button>
+        </div>
+
+        <!-- Step 4: Age -->
+        <div class="glass-card hidden" id="step-age">
+            <div class="card-header">
+                <div class="card-icon">🎂</div>
+                <h2 class="card-title">Ваш вік</h2>
+                <p class="card-subtitle">Скільки вам років?</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-age">Вік</label>
+                <input type="number" id="input-age" class="form-input" placeholder="Наприклад: 25" min="17" max="65">
+                <div class="error-message" id="error-age">Введіть коректний вік</div>
+            </div>
+            <button class="btn btn-primary" onclick="submitAge()">Далі</button>
+        </div>
+
+        <!-- Step 5: City -->
+        <div class="glass-card hidden" id="step-city">
+            <div class="card-header">
+                <div class="card-icon">🌍</div>
+                <h2 class="card-title">Ваше місто</h2>
+                <p class="card-subtitle">Де ви проживаєте?</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-city">Місто</label>
+                <input type="text" id="input-city" class="form-input" placeholder="Наприклад: Київ">
+                <div class="error-message" id="error-city">Введіть назву міста</div>
+            </div>
+            <button class="btn btn-primary" onclick="submitCity()">Далі</button>
+        </div>
+
+        <!-- Step 6: Telegram -->
+        <div class="glass-card hidden" id="step-telegram">
+            <div class="card-header">
+                <div class="card-icon">📱</div>
+                <h2 class="card-title">Ваш Telegram</h2>
+                <p class="card-subtitle">Як з вами зв'язатися?</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-telegram">Telegram username</label>
+                <input type="text" id="input-telegram" class="form-input" placeholder="@username">
+                <div class="error-message" id="error-telegram">Введіть Telegram username</div>
+            </div>
+            <button class="btn btn-primary" onclick="submitTelegram()">Далі</button>
+        </div>
+
+        <!-- Step 7: Phone (Optional) -->
+        <div class="glass-card hidden" id="step-phone">
+            <div class="card-header">
+                <div class="card-icon">📞</div>
+                <h2 class="card-title">Номер телефону</h2>
+                <p class="card-subtitle">Необов'язково</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-phone">Телефон</label>
+                <input type="tel" id="input-phone" class="form-input" placeholder="+380 XX XXX XX XX">
+            </div>
+            <button class="btn btn-primary" onclick="submitPhone()" style="margin-bottom: 12px;">
+                Відправити заявку
+            </button>
+            <button class="btn btn-secondary" onclick="skipPhone()">
+                Пропустити
+            </button>
+        </div>
+
+        <!-- Step 8: Success -->
+        <div class="glass-card hidden" id="step-success">
+            <div class="success-screen">
+                <div class="success-icon">✨</div>
+                <h2 class="success-title">Заявку відправлено!</h2>
+                <p class="success-message">
+                    Дякуємо за вашу заявку!<br>
+                    Ми зв'яжемося з вами найближчим часом.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Відправка заявки...</div>
+    </div>
+
+    <script>
+        // Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.enableClosingConfirmation();
+
+        // Game Data
+        const formData = {
+            currentStep: 1,
+            totalSteps: 6,
+            data: {
+                vacancy: '',
+                name: '',
+                age: '',
+                city: '',
+                telegram: '',
+                phone: ''
+            }
+        };
+
+        // Temporary vacancies (will be loaded from bot)
+        const vacancies = [
+            {
+                id: 1,
+                name: "Оператор чату",
+                icon: "💬",
+                salary: "від 15000 грн",
+                description: "Спілкування з клієнтами онлайн"
+            },
+            {
+                id: 2,
+                name: "Адміністратор",
+                icon: "🏢",
+                salary: "від 18000 грн",
+                description: "Організація роботи офісу"
+            },
+            {
+                id: 3,
+                name: "Менеджер з продажу",
+                icon: "📊",
+                salary: "від 20000 + %",
+                description: "Активні продажі"
+            },
+            {
+                id: 4,
+                name: "Менеджер по роботі з клієнтами",
+                icon: "🤝",
+                salary: "від 17000 грн",
+                description: "Підтримка клієнтів"
+            },
+            {
+                id: 5,
+                name: "HR-менеджер",
+                icon: "👥",
+                salary: "від 22000 грн",
+                description: "Підбір персоналу"
+            },
+            {
+                id: 6,
+                name: "Чат менеджер",
+                icon: "💼",
+                salary: "від 16000 грн",
+                description: "Координація в чатах"
+            },
+            {
+                id: 7,
+                name: "Sale Manager",
+                icon: "🎯",
+                salary: "від 25000 + %",
+                description: "Менеджмент продажів"
+            }
+        ];
+
+        // Initialize
+        function init() {
+            renderVacancies();
+            
+            // Autofill from Telegram
+            if (tg.initDataUnsafe?.user) {
+                const user = tg.initDataUnsafe.user;
+                if (user.first_name && user.last_name) {
+                    document.getElementById('input-name').value = `${user.first_name} ${user.last_name}`;
+                }
+                if (user.username) {
+                    document.getElementById('input-telegram').value = `@${user.username}`;
+                }
+            }
+        }
+
+        // Render vacancies
+        function renderVacancies() {
+            const grid = document.getElementById('vacancy-grid');
+            grid.innerHTML = '';
+
+            vacancies.forEach((vacancy) => {
+                const card = document.createElement('div');
+                card.className = 'vacancy-card';
+                card.onclick = () => selectVacancy(vacancy);
+                
+                card.innerHTML = `
+                    <div class="vacancy-header">
+                        <span class="vacancy-icon">${vacancy.icon}</span>
+                        <span class="vacancy-name">${vacancy.name}</span>
+                    </div>
+                    <div class="vacancy-meta">
+                        <span class="vacancy-salary">💰 ${vacancy.salary}</span>
+                        <span class="vacancy-description">${vacancy.description}</span>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Start form
+        function startForm() {
+            vibrate(10);
+            hideStep('step-welcome');
+            showStep('step-vacancy');
+            updateProgress(1);
+        }
+
+        // Select vacancy
+        function selectVacancy(vacancy) {
+            formData.data.vacancy = vacancy.name;
+            vibrate(10);
+            
+            // Visual feedback
+            document.querySelectorAll('.vacancy-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            setTimeout(() => {
+                hideStep('step-vacancy');
+                showStep('step-name');
+                updateProgress(2);
+            }, 300);
+        }
+
+        // Submit name
+        function submitName() {
+            const input = document.getElementById('input-name');
+            const value = input.value.trim();
+            
+            if (value.length < 2) {
+                showError('input-name', 'error-name');
+                vibrate(100);
+                return;
+            }
+            
+            formData.data.name = value;
+            hideError('input-name', 'error-name');
+            vibrate(10);
+            
+            hideStep('step-name');
+            showStep('step-age');
+            updateProgress(3);
+        }
+
+        // Submit age
+        function submitAge() {
+            const input = document.getElementById('input-age');
+            const value = parseInt(input.value);
+            
+            if (isNaN(value) || value < 17 || value > 65) {
+                showError('input-age', 'error-age');
+                vibrate(100);
+                return;
+            }
+            
+            formData.data.age = value;
+            hideError('input-age', 'error-age');
+            vibrate(10);
+            
+            hideStep('step-age');
+            showStep('step-city');
+            updateProgress(4);
+        }
+
+        // Submit city
+        function submitCity() {
+            const input = document.getElementById('input-city');
+            const value = input.value.trim();
+            
+            if (value.length < 2) {
+                showError('input-city', 'error-city');
+                vibrate(100);
+                return;
+            }
+            
+            formData.data.city = value;
+            hideError('input-city', 'error-city');
+            vibrate(10);
+            
+            hideStep('step-city');
+            showStep('step-telegram');
+            updateProgress(5);
+        }
+
+        // Submit telegram
+        function submitTelegram() {
+            const input = document.getElementById('input-telegram');
+            const value = input.value.trim();
+            
+            if (value.length < 3) {
+                showError('input-telegram', 'error-telegram');
+                vibrate(100);
+                return;
+            }
+            
+            formData.data.telegram = value;
+            hideError('input-telegram', 'error-telegram');
+            vibrate(10);
+            
+            hideStep('step-telegram');
+            showStep('step-phone');
+            updateProgress(6);
+        }
+
+        // Submit phone
+        function submitPhone() {
+            const input = document.getElementById('input-phone');
+            formData.data.phone = input.value.trim();
+            
+            sendFormData();
+        }
+
+        // Skip phone
+        function skipPhone() {
+            formData.data.phone = '';
+            sendFormData();
+        }
+
+        // Send form data
+        async function sendFormData() {
+            document.getElementById('loading-overlay').classList.add('show');
+            
+            const data = {
+                ...formData.data,
+                timestamp: new Date().toISOString(),
+                telegram_user_id: tg.initDataUnsafe?.user?.id || null
+            };
+            
+            try {
+                // Send to Telegram Bot
+                tg.sendData(JSON.stringify(data));
+                
+                setTimeout(() => {
+                    document.getElementById('loading-overlay').classList.remove('show');
+                    hideStep('step-phone');
+                    showStep('step-success');
+                    createConfetti();
+                    
+                    // Close after 3 seconds
+                    setTimeout(() => {
+                        tg.close();
+                    }, 3000);
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading-overlay').classList.remove('show');
+                alert('Помилка відправки. Спробуйте ще раз.');
+            }
+        }
+
+        // Progress
+        function updateProgress(step) {
+            formData.currentStep = step;
+            document.getElementById('current-step').textContent = step;
+            const percentage = (step / formData.totalSteps) * 100;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // Show/Hide steps
+        function showStep(id) {
+            const step = document.getElementById(id);
+            step.classList.remove('hidden');
+            step.style.animation = 'fadeIn 0.5s';
+        }
+
+        function hideStep(id) {
+            const step = document.getElementById(id);
+            step.classList.add('hidden');
+        }
+
+        // Error handling
+        function showError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.add('error');
+            error.classList.add('show');
+            
+            setTimeout(() => {
+                input.classList.remove('error');
+            }, 500);
+        }
+
+        function hideError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.remove('error');
+            input.classList.add('success');
+            error.classList.remove('show');
+            
+            setTimeout(() => {
+                input.classList.remove('success');
+            }, 1000);
+        }
+
+        // Vibration
+        function vibrate(pattern) {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        // Confetti
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'];
+            
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confettiFall ${2 + Math.random() * 2}s linear forwards`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
