@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    <title>Кар'єрні можливості</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --white: #ffffff;
+            --black: #000000;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-900: #171717;
+            --gold: #d4af37;
+            --gold-dark: #b8941f;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: -1px;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+
+        /* Progress */
+        .progress-wrapper {
+            margin-bottom: 48px;
+            animation: fadeIn 0.8s ease 0.2s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-bg {
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+            animation: fadeIn 0.8s ease 0.3s backwards;
+        }
+
+        /* Vacancy Card */
+        .vacancy-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vacancy-card:nth-child(1) { animation-delay: 0.1s; }
+        .vacancy-card:nth-child(2) { animation-delay: 0.2s; }
+        .vacancy-card:nth-child(3) { animation-delay: 0.3s; }
+        .vacancy-card:nth-child(4) { animation-delay: 0.4s; }
+        .vacancy-card:nth-child(5) { animation-delay: 0.5s; }
+        .vacancy-card:nth-child(6) { animation-delay: 0.6s; }
+        .vacancy-card:nth-child(7) { animation-delay: 0.7s; }
+
+        .vacancy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.08),
+                0 0 0 1px var(--gray-100);
+            border-color: var(--gray-300);
+        }
+
+        .vacancy-card.selected {
+            border-color: var(--gold);
+            box-shadow: 
+                0 20px 40px rgba(212, 175, 55, 0.15),
+                0 0 0 2px var(--gold);
+        }
+
+        .vacancy-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .vacancy-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .vacancy-info {
+            flex: 1;
+        }
+
+        .vacancy-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .vacancy-salary {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gold-dark);
+        }
+
+        .vacancy-description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--gray-500);
+        }
+
+        /* Form Section */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.6s ease;
+            margin-top: 48px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 56px;
+            padding: 16px 20px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--black);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 32px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Apply Button (після вибору вакансії) */
+        .apply-btn-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, var(--white) 80%, transparent);
+            padding: 24px;
+            display: none;
+            z-index: 200;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .apply-btn {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            display: block;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
+        }
+
+        .apply-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Step by Step Form */
+        .step-form {
+            display: none;
+        }
+
+        .step-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .step-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .step-question {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .step-input {
+            width: 100%;
+            height: 60px;
+            padding: 18px 24px;
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--black);
+            font-family: inherit;
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .step-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .step-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        .step-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-back {
+            flex: 1;
+            height: 56px;
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            color: var(--gray-900);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+
+        .btn-next {
+            flex: 2;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 80px 24px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 32px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--white);
+            animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .success-text {
+            font-size: 16px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            color: #dc2626;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Age Warning Message */
+        .age-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .age-warning.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .age-warning-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 12px;
+        }
+
+        .age-warning-text {
+            font-size: 14px;
+            color: #78350f;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .alternative-vacancies {
+            margin-top: 16px;
+        }
+
+        .alternative-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .alt-vacancy-card {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alt-vacancy-card:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .alt-vacancy-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .alt-vacancy-age {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .alt-vacancy-select {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 48px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 32px 20px 60px;
+            }
+
+            .header-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .vacancy-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">EJ</div>
+            <h1 class="header-title">Кар'єрні можливості</h1>
+            <p class="header-subtitle">Оберіть напрямок і залиште заявку</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-wrapper" id="progressWrapper">
+            <div class="progress-label">Крок <span id="stepNumber">1</span> з 6</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Vacancies -->
+        <div id="vacanciesSection">
+            <h2 class="section-title">Оберіть позицію</h2>
+            <div id="vacanciesList"></div>
+        </div>
+
+        <!-- Apply Button (з'являється після вибору) -->
+        <div class="apply-btn-wrapper" id="applyBtnWrapper">
+            <button class="apply-btn" id="applyBtn">Залишити анкету на цю посаду</button>
+        </div>
+
+        <!-- Step by Step Form -->
+        <div class="step-form" id="stepForm">
+            <div class="step-container">
+                <!-- Progress -->
+                <div class="progress-wrapper">
+                    <div class="progress-label">Крок <span id="stepFormNumber">1</span> з 5</div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="stepProgressFill" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Name -->
+                <div class="step-content" id="step1">
+                    <div class="step-header">
+                        <div class="step-number">Крок 1 з 5</div>
+                        <h2 class="step-question">Як вас звати?</h2>
+                    </div>
+                    <input type="text" class="step-input" id="stepName" placeholder="Іван Петренко" autocomplete="name">
+                    <div class="step-buttons">
+                        <button class="btn-back" onclick="goToVacancies()">Назад</button>
+                        <button class="btn-next" id="nextStep1" disabled>Далі</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Age -->
+                <div class="step-content" id="step2" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">Крок 2 з 5</div>
+                        <h2 class="step-question">Скільки вам років?</h2>
+                    </div>
+                    <input type="number" class="step-input" id="stepAge" placeholder="25" min="17" max="70">
+                    
+                    <!-- Age Warning -->
+                    <div class="age-warning" id="ageWarning">
+                        <div class="age-warning-title" id="ageWarningTitle"></div>
+                        <div class="age-warning-text" id="ageWarningText"></div>
+                        <div class="alternative-vacancies" id="alternativeVacancies"></div>
+                    </div>
+                    
+                    <div class="step-buttons">
+                        <button class="btn-back" onclick="goToStep(1)">Назад</button>
+                        <button class="btn-next" id="nextStep2" disabled>Далі</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: City -->
+                <div class="step-content" id="step3" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">Крок 3 з 5</div>
+                        <h2 class="step-question">З якого ви міста?</h2>
+                    </div>
+                    <input type="text" class="step-input" id="stepCity" placeholder="Київ" autocomplete="address-level2">
+                    <div class="step-buttons">
+                        <button class="btn-back" onclick="goToStep(2)">Назад</button>
+                        <button class="btn-next" id="nextStep3" disabled>Далі</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Telegram -->
+                <div class="step-content" id="step4" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">Крок 4 з 5</div>
+                        <h2 class="step-question">Ваш Telegram?</h2>
+                    </div>
+                    <input type="text" class="step-input" id="stepTelegram" placeholder="@username" autocomplete="username">
+                    <div class="step-buttons">
+                        <button class="btn-back" onclick="goToStep(3)">Назад</button>
+                        <button class="btn-next" id="nextStep4" disabled>Далі</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Phone -->
+                <div class="step-content" id="step5" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">Крок 5 з 5</div>
+                        <h2 class="step-question">Телефон (необов'язково)</h2>
+                    </div>
+                    <input type="tel" class="step-input" id="stepPhone" placeholder="+380501234567" autocomplete="tel">
+                    <div class="step-buttons">
+                        <button class="btn-back" onclick="goToStep(4)">Назад</button>
+                        <button class="btn-next" id="submitForm">Відправити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form (hidden, old version) -->
+        <div class="form-section" id="formSection" style="display: none;">
+        </div>
+
+        <!-- Success -->
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Заявка відправлена</h2>
+            <p class="success-text">Дякуємо за інтерес! Ми зв'яжемося з вами найближчим часом для обговорення деталей</p>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // Vacancies
+        const vacancies = [
+            {
+                id: 1,
+                name: "Оператор чату",
+                icon: "01",
+                salary: "від 35 000 грн",
+                description: "Спілкування з клієнтами онлайн. Навчання з першого дня",
+                maxAge: 28
+            },
+            {
+                id: 2,
+                name: "Адміністратор",
+                icon: "02",
+                salary: "від 42 000 грн",
+                description: "Організація роботи офісу. Сучасний офіс в центрі",
+                maxAge: 35
+            },
+            {
+                id: 3,
+                name: "Менеджер з продажу",
+                icon: "03",
+                salary: "від 60 000 грн + премії",
+                description: "Активні продажі. Високі бонуси до 100%",
+                maxAge: 35
+            },
+            {
+                id: 4,
+                name: "Менеджер з клієнтами",
+                icon: "04",
+                salary: "від 55 000 грн + премії",
+                description: "Підтримка довгострокових відносин. Віддалена робота",
+                maxAge: 35
+            },
+            {
+                id: 5,
+                name: "HR-менеджер",
+                icon: "05",
+                salary: "від 48 000 грн + премії",
+                description: "Підбір талантів. Бонуси за закриті вакансії",
+                maxAge: 28
+            },
+            {
+                id: 6,
+                name: "Чат менеджер",
+                icon: "06",
+                salary: "від 35 000 грн",
+                description: "Координація в месенджерах. Кар'єрне зростання",
+                maxAge: 28
+            },
+            {
+                id: 7,
+                name: "Sale Manager",
+                icon: "07",
+                salary: "від 60 000 грн + премії",
+                description: "Керування відділом. Преміальні до 150%",
+                maxAge: 35
+            }
+        ];
+
+        // Google Apps Script URL
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSTwJbWzFORXFwBgh6Jrkc1BHf6kKYQUB2qbseoJbzGPNqmtCUUvPf8rY0tIxzDBjDig/exec";
+
+        let selectedVacancy = null;
+        let currentFormStep = 1;
+        let formData = {};
+
+        // Update main progress
+        function updateProgress(step) {
+            document.getElementById('stepNumber').textContent = step;
+            const percentage = (step / 6) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Render vacancies
+        function renderVacancies() {
+            const container = document.getElementById('vacanciesList');
+            container.innerHTML = vacancies.map(vacancy => `
+                <div class="vacancy-card" data-id="${vacancy.id}">
+                    <div class="vacancy-header">
+                        <div class="vacancy-icon">${vacancy.icon}</div>
+                        <div class="vacancy-info">
+                            <div class="vacancy-name">${vacancy.name}</div>
+                            <div class="vacancy-salary">${vacancy.salary}</div>
+                        </div>
+                    </div>
+                    <div class="vacancy-description">${vacancy.description}</div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.vacancy-card').forEach(card => {
+                card.addEventListener('click', () => selectVacancy(card.dataset.id));
+            });
+        }
+
+        // Select vacancy
+        function selectVacancy(id) {
+            selectedVacancy = vacancies.find(v => v.id == id);
+            
+            // Update UI
+            document.querySelectorAll('.vacancy-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.id == id);
+            });
+
+            // Show apply button
+            document.getElementById('applyBtnWrapper').style.display = 'block';
+            
+            // Scroll to button
+            setTimeout(() => {
+                document.getElementById('applyBtnWrapper').scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
+        }
+
+        // Apply button click - show step form
+        document.getElementById('applyBtn').addEventListener('click', () => {
+            if (!selectedVacancy) return;
+            
+            // Hide vacancies and button
+            document.getElementById('vacanciesSection').style.display = 'none';
+            document.getElementById('applyBtnWrapper').style.display = 'none';
+            document.getElementById('progressWrapper').style.display = 'none';
+            
+            // Show step form
+            document.getElementById('stepForm').classList.add('active');
+            document.getElementById('stepForm').scrollIntoView({ behavior: 'smooth' });
+            
+            // Focus first input
+            setTimeout(() => {
+                document.getElementById('stepName').focus();
+            }, 300);
+        });
+
+        // Go back to vacancies
+        function goToVacancies() {
+            document.getElementById('stepForm').classList.remove('active');
+            document.getElementById('vacanciesSection').style.display = 'block';
+            document.getElementById('applyBtnWrapper').style.display = 'block';
+            document.getElementById('progressWrapper').style.display = 'block';
+            currentFormStep = 1;
+            goToStep(1);
+        }
+
+        // Navigate between steps
+        function goToStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('step' + i).style.display = 'none';
+            }
+            
+            // Show current step
+            document.getElementById('step' + step).style.display = 'block';
+            currentFormStep = step;
+            
+            // Update progress
+            document.getElementById('stepFormNumber').textContent = step;
+            const percentage = (step / 5) * 100;
+            document.getElementById('stepProgressFill').style.width = percentage + '%';
+            
+            // Focus input
+            const inputs = {
+                1: 'stepName',
+                2: 'stepAge',
+                3: 'stepCity',
+                4: 'stepTelegram',
+                5: 'stepPhone'
+            };
+            if (inputs[step]) {
+                setTimeout(() => {
+                    document.getElementById(inputs[step]).focus();
+                }, 100);
+            }
+        }
+
+        // Step 1: Name validation
+        const stepNameInput = document.getElementById('stepName');
+        const nextStep1Btn = document.getElementById('nextStep1');
+
+        stepNameInput.addEventListener('input', () => {
+            const value = stepNameInput.value.trim();
+            nextStep1Btn.disabled = value.length < 2;
+            if (!nextStep1Btn.disabled) {
+                formData.name = value;
+            }
+        });
+
+        nextStep1Btn.addEventListener('click', () => {
+            if (formData.name) {
+                goToStep(2);
+            }
+        });
+
+        // Step 2: Age validation
+        const stepAgeInput = document.getElementById('stepAge');
+        const nextStep2Btn = document.getElementById('nextStep2');
+        const ageWarning = document.getElementById('ageWarning');
+        const ageWarningTitle = document.getElementById('ageWarningTitle');
+        const ageWarningText = document.getElementById('ageWarningText');
+        const alternativeVacanciesDiv = document.getElementById('alternativeVacancies');
+
+        stepAgeInput.addEventListener('input', () => {
+            const value = parseInt(stepAgeInput.value);
+            
+            // Скидаємо warning
+            ageWarning.classList.remove('show');
+            alternativeVacanciesDiv.innerHTML = '';
+            
+            // Перевірка на порожнє значення
+            if (!value) {
+                nextStep2Btn.disabled = true;
+                return;
+            }
+            
+            // Перевірка на мінімальний вік (17)
+            if (value < 17) {
+                nextStep2Btn.disabled = true;
+                ageWarningTitle.textContent = 'Вік не підходить';
+                ageWarningText.textContent = 'Мінімальний вік для будь-якої вакансії - 17 років.';
+                ageWarning.classList.add('show');
+                return;
+            }
+            
+            // Перевірка на максимальний вік (70)
+            if (value > 70) {
+                nextStep2Btn.disabled = true;
+                ageWarningTitle.textContent = 'Вік не підходить';
+                ageWarningText.textContent = 'На жаль, ми не можемо прийняти анкету з таким віком.';
+                ageWarning.classList.add('show');
+                return;
+            }
+            
+            // Перевірка на максимальний вік для обраної вакансії
+            if (selectedVacancy && value > selectedVacancy.maxAge) {
+                nextStep2Btn.disabled = true;
+                
+                // Знаходимо підходящі вакансії
+                const suitableVacancies = vacancies.filter(v => value <= v.maxAge);
+                
+                ageWarningTitle.textContent = 'Вік не підходить для цієї вакансії';
+                ageWarningText.textContent = `На вакансію "${selectedVacancy.name}" максимальний вік - ${selectedVacancy.maxAge} років.`;
+                
+                if (suitableVacancies.length > 0) {
+                    alternativeVacanciesDiv.innerHTML = `
+                        <div class="alternative-title">Вакансії, які вам підходять:</div>
+                        ${suitableVacancies.map(v => `
+                            <div class="alt-vacancy-card" data-vacancy-id="${v.id}">
+                                <div>
+                                    <div class="alt-vacancy-name">${v.name}</div>
+                                    <div class="alt-vacancy-age">Максимальний вік: ${v.maxAge} років</div>
+                                </div>
+                                <button class="alt-vacancy-select" onclick="selectAlternativeVacancy(${v.id})">Обрати</button>
+                            </div>
+                        `).join('')}
+                    `;
+                } else {
+                    alternativeVacanciesDiv.innerHTML = `
+                        <div class="alt-vacancy-age">На жаль, немає підходящих вакансій для вашого віку.</div>
+                    `;
+                }
+                
+                ageWarning.classList.add('show');
+                return;
+            }
+            
+            // Все ОК - дозволяємо продовжити
+            nextStep2Btn.disabled = false;
+            formData.age = value;
+        });
+
+        // Функція для вибору альтернативної вакансії
+        window.selectAlternativeVacancy = function(vacancyId) {
+            // Знаходимо нову вакансію
+            const newVacancy = vacancies.find(v => v.id == vacancyId);
+            if (!newVacancy) return;
+            
+            // Оновлюємо обрану вакансію
+            selectedVacancy = newVacancy;
+            
+            // Перевіряємо вік знову
+            const age = parseInt(stepAgeInput.value);
+            if (age && age >= 17 && age <= newVacancy.maxAge) {
+                // Приховуємо warning
+                ageWarning.classList.remove('show');
+                // Активуємо кнопку
+                nextStep2Btn.disabled = false;
+                formData.age = age;
+                
+                // Повертаємося до вибору вакансій щоб побачити нову вакансію
+                goToVacancies();
+                
+                // Автоматично обираємо нову вакансію
+                setTimeout(() => {
+                    selectVacancy(vacancyId);
+                }, 100);
+            }
+        };
+
+        nextStep2Btn.addEventListener('click', () => {
+            if (formData.age) {
+                goToStep(3);
+            }
+        });
+
+        // Step 3: City validation
+        const stepCityInput = document.getElementById('stepCity');
+        const nextStep3Btn = document.getElementById('nextStep3');
+
+        stepCityInput.addEventListener('input', () => {
+            const value = stepCityInput.value.trim();
+            nextStep3Btn.disabled = value.length < 2;
+            if (!nextStep3Btn.disabled) {
+                formData.city = value;
+            }
+        });
+
+        nextStep3Btn.addEventListener('click', () => {
+            if (formData.city) {
+                goToStep(4);
+            }
+        });
+
+        // Step 4: Telegram validation
+        const stepTelegramInput = document.getElementById('stepTelegram');
+        const nextStep4Btn = document.getElementById('nextStep4');
+
+        stepTelegramInput.addEventListener('input', () => {
+            const value = stepTelegramInput.value.trim();
+            nextStep4Btn.disabled = value.length < 2;
+            if (!nextStep4Btn.disabled) {
+                formData.telegram = value;
+            }
+        });
+
+        nextStep4Btn.addEventListener('click', () => {
+            if (formData.telegram) {
+                goToStep(5);
+            }
+        });
+
+        // Step 5: Phone (optional) - always enabled
+        const stepPhoneInput = document.getElementById('stepPhone');
+
+        stepPhoneInput.addEventListener('input', () => {
+            formData.phone = stepPhoneInput.value.trim();
+        });
+
+        // Submit form
+        document.getElementById('submitForm').addEventListener('click', async () => {
+            // Disabled кнопку щоб запобігти подвійному надсиланню
+            const submitBtn = document.getElementById('submitForm');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Відправка...';
+            
+            // Prepare data
+            const data = {
+                name: formData.name,
+                age: formData.age,
+                city: formData.city,
+                telegram: formData.telegram,
+                phone: formData.phone || '',
+                vacancy: selectedVacancy.name
+            };
+
+            try {
+                // Відправка в Google Sheets
+                if (APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                    const response = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    console.log('Дані відправлено в Google Sheets');
+                }
+                
+                // Також відправка в Telegram bot (опціонально)
+                try {
+                    tg.sendData(JSON.stringify(data));
+                } catch (e) {
+                    console.log('Telegram недоступний:', e);
+                }
+                
+                // Показуємо success
+                showSuccess();
+                
+            } catch (error) {
+                console.error('Помилка відправки:', error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Відправити';
+                alert('Помилка відправки. Перевірте URL Google Apps Script та спробуйте ще раз');
+            }
+        });
+
+        // Show success
+        function showSuccess() {
+            document.querySelector('.container').innerHTML = `
+                <div class="success-message" style="display: block;">
+                    <div class="success-icon">✓</div>
+                    <h2 class="success-title">Заявка відправлена</h2>
+                    <p class="success-text">Дякуємо за інтерес! Ми зв'яжемося з вами найближчим часом для обговорення деталей</p>
+                </div>
+            `;
+        }
+
+        // Enter key handlers
+        stepNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !nextStep1Btn.disabled) {
+                nextStep1Btn.click();
+            }
+        });
+
+        stepAgeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !nextStep2Btn.disabled) {
+                nextStep2Btn.click();
+            }
+        });
+
+        stepCityInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !nextStep3Btn.disabled) {
+                nextStep3Btn.click();
+            }
+        });
+
+        stepTelegramInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !nextStep4Btn.disabled) {
+                nextStep4Btn.click();
+            }
+        });
+
+        stepPhoneInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('submitForm').click();
+            }
+        });
+
+        // Init
+        renderVacancies();
+        updateProgress(1);
+    </script>
+</body>
+</html>
