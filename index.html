@@ -166,6 +166,8 @@
         .vacancy-card:nth-child(5) { animation-delay: 0.5s; }
         .vacancy-card:nth-child(6) { animation-delay: 0.6s; }
         .vacancy-card:nth-child(7) { animation-delay: 0.7s; }
+        .vacancy-card:nth-child(8) { animation-delay: 0.8s; }
+        .vacancy-card:nth-child(9) { animation-delay: 0.9s; }
 
         .vacancy-card:hover {
             transform: translateY(-4px);
@@ -872,7 +874,7 @@
                         <div class="step-number">Крок 4 з 5</div>
                         <h2 class="step-question">Ваш Telegram?</h2>
                     </div>
-                    <input type="text" class="step-input" id="stepTelegram" placeholder="@username" autocomplete="username">
+                    <input type="text" class="step-input" id="stepTelegram" placeholder="username" autocomplete="username">
                     <button class="btn-auto-username" onclick="fillTelegramUsername()">
                         📱 Підставити мій @username
                     </button>
@@ -918,58 +920,74 @@
         const vacancies = [
             {
                 id: 1,
-                name: "Оператор чату",
-                icon: "01",
-                salary: "від 35 000 грн",
-                description: "Спілкування з клієнтами онлайн. Навчання з першого дня",
-                maxAge: 28
-            },
-            {
-                id: 2,
                 name: "Адміністратор",
-                icon: "02",
+                icon: "01",
                 salary: "від 42 000 грн",
                 description: "Організація роботи офісу. Сучасний офіс в центрі",
                 maxAge: 35
             },
             {
-                id: 3,
+                id: 2,
                 name: "Менеджер з продажу",
-                icon: "03",
+                icon: "02",
                 salary: "від 60 000 грн + премії",
                 description: "Активні продажі. Високі бонуси до 100%",
                 maxAge: 35
             },
             {
-                id: 4,
-                name: "Менеджер по роботі з клієнтами",
-                icon: "04",
+                id: 3,
+                name: "Менеджер з клієнтами",
+                icon: "03",
                 salary: "від 55 000 грн + премії",
                 description: "Підтримка довгострокових відносин. Віддалена робота",
                 maxAge: 35
             },
             {
-                id: 5,
+                id: 4,
                 name: "HR-менеджер",
-                icon: "05",
+                icon: "04",
                 salary: "від 48 000 грн + премії",
                 description: "Підбір талантів. Бонуси за закриті вакансії",
-                maxAge: 28
+                maxAge: 35
+            },
+            {
+                id: 5,
+                name: "Sale Manager",
+                icon: "05",
+                salary: "від 60 000 грн + премії",
+                description: "Керування відділом. Преміальні до 150%",
+                maxAge: 35
             },
             {
                 id: 6,
-                name: "Чат менеджер",
+                name: "Рекрутер",
                 icon: "06",
-                salary: "від 35 000 грн",
-                description: "Координація в месенджерах. Кар'єрне зростання",
-                maxAge: 28
+                salary: "від 40 000 грн + премії",
+                description: "Пошук та підбір кандидатів. Навчання з першого дня",
+                maxAge: 35
             },
             {
                 id: 7,
-                name: "Sale Manager",
+                name: "Менеджер по роботі з персоналом",
                 icon: "07",
-                salary: "від 60 000 грн + премії",
-                description: "Керування відділом. Преміальні до 150%",
+                salary: "від 45 000 грн + премії",
+                description: "Управління командою. Кар'єрне зростання",
+                maxAge: 35
+            },
+            {
+                id: 8,
+                name: "Спеціаліст з комунікацій",
+                icon: "08",
+                salary: "від 38 000 грн",
+                description: "Внутрішні та зовнішні комунікації. Гнучкий графік",
+                maxAge: 35
+            },
+            {
+                id: 9,
+                name: "Project Manager",
+                icon: "09",
+                salary: "від 55 000 грн + премії",
+                description: "Управління проєктами. Робота з командою",
                 maxAge: 35
             }
         ];
@@ -1117,8 +1135,12 @@
         // Step 1: Name validation
         const stepNameInput = document.getElementById('stepName');
         const nextStep1Btn = document.getElementById('nextStep1');
-
+        
+        // Фільтрація - тільки літери
         stepNameInput.addEventListener('input', () => {
+            // Видаляємо все крім літер (укр, рос, англ), пробілів та дефісів
+            stepNameInput.value = stepNameInput.value.replace(/[^а-яА-ЯіІїЇєЄґҐёЁa-zA-Z\s\-']/g, '');
+            
             const value = stepNameInput.value.trim();
             nextStep1Btn.disabled = value.length < 2;
             if (!nextStep1Btn.disabled) {
@@ -1162,11 +1184,11 @@
                 return;
             }
             
-            // Перевірка на максимальний вік (70)
-            if (value > 70) {
+            // Перевірка на максимальний вік (35)
+            if (value > 35) {
                 nextStep2Btn.disabled = true;
                 ageWarningTitle.textContent = 'Вік не підходить';
-                ageWarningText.textContent = 'На жаль, ми не можемо прийняти анкету з таким віком.';
+                ageWarningText.textContent = 'Максимальний вік для будь-якої вакансії - 35 років.';
                 ageWarning.classList.add('show');
                 return;
             }
@@ -1246,8 +1268,12 @@
         // Step 3: City validation
         const stepCityInput = document.getElementById('stepCity');
         const nextStep3Btn = document.getElementById('nextStep3');
-
+        
+        // Фільтрація - тільки літери
         stepCityInput.addEventListener('input', () => {
+            // Видаляємо все крім літер (укр, рос, англ), пробілів та дефісів
+            stepCityInput.value = stepCityInput.value.replace(/[^а-яА-ЯіІїЇєЄґҐёЁa-zA-Z\s\-']/g, '');
+            
             const value = stepCityInput.value.trim();
             nextStep3Btn.disabled = value.length < 2;
             if (!nextStep3Btn.disabled) {
@@ -1264,11 +1290,41 @@
         // Step 4: Telegram validation
         const stepTelegramInput = document.getElementById('stepTelegram');
         const nextStep4Btn = document.getElementById('nextStep4');
-
+        
+        // Встановлюємо @ при фокусі на порожньому полі
+        stepTelegramInput.addEventListener('focus', () => {
+            if (stepTelegramInput.value === '') {
+                stepTelegramInput.value = '@';
+            }
+        });
+        
+        // Фільтрація - тільки англійські літери, цифри, _ та @
         stepTelegramInput.addEventListener('input', () => {
-            const value = stepTelegramInput.value.trim();
-            nextStep4Btn.disabled = value.length < 2;
-            if (!nextStep4Btn.disabled) {
+            let value = stepTelegramInput.value;
+            
+            // Видаляємо все крім англійських літер, цифр, _ та @
+            value = value.replace(/[^a-zA-Z0-9_@]/g, '');
+            
+            // Якщо є подвійна собачка @@ - видаляємо одну
+            value = value.replace(/@@+/g, '@');
+            
+            // Якщо собачка не на початку - переносимо її
+            if (value.includes('@') && !value.startsWith('@')) {
+                value = '@' + value.replace(/@/g, '');
+            }
+            
+            // Якщо немає собачки - додаємо
+            if (value && !value.startsWith('@')) {
+                value = '@' + value;
+            }
+            
+            stepTelegramInput.value = value;
+            
+            // Валідація: @ + мінімум 1 літера на початку username
+            const username = value.substring(1); // без @
+            const isValid = username.length >= 1 && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(username);
+            nextStep4Btn.disabled = !isValid;
+            if (isValid) {
                 formData.telegram = value;
             }
         });
@@ -1279,10 +1335,13 @@
             }
         });
 
-        // Step 5: Phone (optional) - always enabled
+        // Step 5: Phone (optional) - only digits allowed
         const stepPhoneInput = document.getElementById('stepPhone');
-
+        
+        // Фільтрація - тільки цифри та +
         stepPhoneInput.addEventListener('input', () => {
+            // Видаляємо все крім цифр та +
+            stepPhoneInput.value = stepPhoneInput.value.replace(/[^\d\+]/g, '');
             formData.phone = stepPhoneInput.value.trim();
         });
 
