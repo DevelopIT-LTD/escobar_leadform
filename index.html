@@ -36,6 +36,174 @@
             min-height: 100vh;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Floating Bubbles */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 148, 31, 0.08) 100%);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            animation: float linear infinite;
+        }
+
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-duration: 25s;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            left: 25%;
+            animation-duration: 20s;
+            animation-delay: -5s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            left: 45%;
+            animation-duration: 28s;
+            animation-delay: -10s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 50px;
+            height: 50px;
+            left: 65%;
+            animation-duration: 22s;
+            animation-delay: -3s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            left: 80%;
+            animation-duration: 26s;
+            animation-delay: -8s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            left: 5%;
+            animation-duration: 30s;
+            animation-delay: -15s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 55px;
+            height: 55px;
+            left: 35%;
+            animation-duration: 23s;
+            animation-delay: -12s;
+        }
+
+        .bubble:nth-child(8) {
+            width: 75px;
+            height: 75px;
+            left: 55%;
+            animation-duration: 27s;
+            animation-delay: -7s;
+        }
+
+        .bubble:nth-child(9) {
+            width: 65px;
+            height: 65px;
+            left: 90%;
+            animation-duration: 24s;
+            animation-delay: -2s;
+        }
+
+        .bubble:nth-child(10) {
+            width: 85px;
+            height: 85px;
+            left: 15%;
+            animation-duration: 29s;
+            animation-delay: -18s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Додаємо горизонтальний рух */
+        .bubble:nth-child(odd) {
+            animation-name: floatLeft;
+        }
+
+        .bubble:nth-child(even) {
+            animation-name: floatRight;
+        }
+
+        @keyframes floatLeft {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-50px) rotate(180deg);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(30px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatRight {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(50px) rotate(180deg);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-30px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Container */
@@ -43,6 +211,8 @@
             max-width: 480px;
             margin: 0 auto;
             padding: 40px 24px 80px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
@@ -138,8 +308,10 @@
 
         /* Vacancy Card */
         .vacancy-card {
-            background: var(--white);
-            border: 1px solid var(--gray-200);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 229, 229, 0.5);
             border-radius: 16px;
             padding: 28px;
             margin-bottom: 16px;
@@ -329,7 +501,9 @@
             margin: 0 auto;
             display: block;
             height: 56px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: none;
             border-radius: 12px;
             color: var(--white);
@@ -342,6 +516,7 @@
         }
 
         .apply-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.95) 0%, rgba(184, 148, 31, 0.95) 100%);
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
         }
@@ -391,8 +566,10 @@
             width: 100%;
             height: 60px;
             padding: 18px 24px;
-            background: var(--white);
-            border: 2px solid var(--gray-300);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 212, 212, 0.5);
             border-radius: 12px;
             font-size: 18px;
             font-weight: 500;
@@ -409,6 +586,7 @@
         .step-input:focus {
             outline: none;
             border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
 
@@ -420,8 +598,10 @@
         .btn-back {
             flex: 1;
             height: 56px;
-            background: var(--white);
-            border: 2px solid var(--gray-300);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 212, 212, 0.5);
             border-radius: 12px;
             color: var(--gray-900);
             font-size: 16px;
@@ -431,14 +611,16 @@
         }
 
         .btn-back:hover {
-            background: var(--gray-100);
+            background: rgba(245, 245, 245, 0.85);
             border-color: var(--gray-400);
         }
 
         .btn-next {
             flex: 2;
             height: 56px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: none;
             border-radius: 12px;
             color: var(--white);
@@ -449,6 +631,7 @@
         }
 
         .btn-next:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.95) 0%, rgba(184, 148, 31, 0.95) 100%);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
         }
@@ -463,8 +646,10 @@
         .btn-auto-username {
             width: 100%;
             padding: 14px;
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
+            background: rgba(245, 245, 245, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 229, 229, 0.5);
             border-radius: 12px;
             color: var(--gray-900);
             font-size: 15px;
@@ -479,7 +664,7 @@
         }
 
         .btn-auto-username:hover {
-            background: var(--gray-200);
+            background: rgba(229, 229, 229, 0.8);
             transform: translateY(-1px);
         }
 
@@ -783,6 +968,20 @@
     </style>
 </head>
 <body>
+    <!-- Floating Bubbles Background -->
+    <div class="bubbles-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
