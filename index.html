@@ -17,29 +17,68 @@
 
         :root {
             --white: #ffffff;
-            --black: #000000;
-            --gray-50: #fafafa;
-            --gray-100: #f5f5f5;
-            --gray-200: #e5e5e5;
-            --gray-300: #d4d4d4;
-            --gray-400: #a3a3a3;
-            --gray-500: #737373;
-            --gray-900: #171717;
-            --gold: #d4af37;
-            --gold-dark: #b8941f;
+            --black: #0a1628;
+            --gray-50: #f0f4f8;
+            --gray-100: #e1e8ef;
+            --gray-200: #c5d3e0;
+            --gray-300: #a8bdd0;
+            --gray-400: #7a95ad;
+            --gray-500: #5a7a99;
+            --gray-900: #1a2a3a;
+            --gold: #ffd700;
+            --gold-dark: #daa520;
+            /* Новогодние цвета */
+            --christmas-red: #c41e3a;
+            --christmas-green: #228b22;
+            --frost-blue: #e8f4fc;
+            --midnight-blue: #0a1628;
+            --snow-glow: rgba(255, 255, 255, 0.8);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            background: var(--gray-50);
-            color: var(--gray-900);
+            background: linear-gradient(180deg, #0a1628 0%, #1a3a5c 40%, #2d5a7b 70%, #1a3a5c 100%);
+            background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Floating Bubbles */
+        /* Эффект звёздного неба */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, white, transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 160px 120px, white, transparent),
+                radial-gradient(2px 2px at 200px 50px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 250px 160px, white, transparent),
+                radial-gradient(2px 2px at 300px 100px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 350px 70px, white, transparent),
+                radial-gradient(2px 2px at 400px 140px, rgba(255,255,255,0.8), transparent);
+            background-repeat: repeat;
+            background-size: 400px 200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Snowflakes Container */
         .bubbles-container {
             position: fixed;
             top: 0;
@@ -48,101 +87,117 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
-            z-index: 0;
+            z-index: 1;
         }
 
         .bubble {
             position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 148, 31, 0.08) 100%);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            animation: float linear infinite;
+            top: -50px;
+            color: white;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: snowfall linear infinite;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+        }
+
+        .bubble::before {
+            content: '❄';
         }
 
         .bubble:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            left: 10%;
-            animation-duration: 25s;
+            width: auto;
+            height: auto;
+            left: 5%;
+            font-size: 18px;
+            animation-duration: 15s;
             animation-delay: 0s;
         }
 
         .bubble:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            left: 25%;
-            animation-duration: 20s;
-            animation-delay: -5s;
+            width: auto;
+            height: auto;
+            left: 15%;
+            font-size: 12px;
+            animation-duration: 12s;
+            animation-delay: -2s;
         }
 
         .bubble:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            left: 45%;
-            animation-duration: 28s;
-            animation-delay: -10s;
+            width: auto;
+            height: auto;
+            left: 25%;
+            font-size: 24px;
+            animation-duration: 18s;
+            animation-delay: -4s;
         }
 
         .bubble:nth-child(4) {
-            width: 50px;
-            height: 50px;
-            left: 65%;
-            animation-duration: 22s;
-            animation-delay: -3s;
+            width: auto;
+            height: auto;
+            left: 35%;
+            font-size: 14px;
+            animation-duration: 14s;
+            animation-delay: -1s;
         }
 
         .bubble:nth-child(5) {
-            width: 70px;
-            height: 70px;
-            left: 80%;
-            animation-duration: 26s;
-            animation-delay: -8s;
+            width: auto;
+            height: auto;
+            left: 45%;
+            font-size: 20px;
+            animation-duration: 16s;
+            animation-delay: -6s;
         }
 
         .bubble:nth-child(6) {
-            width: 90px;
-            height: 90px;
-            left: 5%;
-            animation-duration: 30s;
-            animation-delay: -15s;
+            width: auto;
+            height: auto;
+            left: 55%;
+            font-size: 16px;
+            animation-duration: 13s;
+            animation-delay: -3s;
         }
 
         .bubble:nth-child(7) {
-            width: 55px;
-            height: 55px;
-            left: 35%;
-            animation-duration: 23s;
-            animation-delay: -12s;
+            width: auto;
+            height: auto;
+            left: 65%;
+            font-size: 22px;
+            animation-duration: 17s;
+            animation-delay: -5s;
         }
 
         .bubble:nth-child(8) {
-            width: 75px;
-            height: 75px;
-            left: 55%;
-            animation-duration: 27s;
+            width: auto;
+            height: auto;
+            left: 75%;
+            font-size: 10px;
+            animation-duration: 11s;
             animation-delay: -7s;
         }
 
         .bubble:nth-child(9) {
-            width: 65px;
-            height: 65px;
-            left: 90%;
-            animation-duration: 24s;
+            width: auto;
+            height: auto;
+            left: 85%;
+            font-size: 18px;
+            animation-duration: 15s;
             animation-delay: -2s;
         }
 
         .bubble:nth-child(10) {
-            width: 85px;
-            height: 85px;
-            left: 15%;
-            animation-duration: 29s;
-            animation-delay: -18s;
+            width: auto;
+            height: auto;
+            left: 95%;
+            font-size: 14px;
+            animation-duration: 14s;
+            animation-delay: -8s;
         }
 
-        @keyframes float {
+        @keyframes snowfall {
             0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
+                transform: translateY(-50px) rotate(0deg) translateX(0);
                 opacity: 0;
             }
             10% {
@@ -152,56 +207,68 @@
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                transform: translateY(100vh) rotate(360deg) translateX(50px);
                 opacity: 0;
             }
         }
 
-        /* Додаємо горизонтальний рух */
+        /* Разные траектории для снежинок */
         .bubble:nth-child(odd) {
-            animation-name: floatLeft;
+            animation-name: snowfallLeft;
         }
 
         .bubble:nth-child(even) {
-            animation-name: floatRight;
+            animation-name: snowfallRight;
         }
 
-        @keyframes floatLeft {
+        @keyframes snowfallLeft {
             0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
+                transform: translateY(-50px) rotate(0deg) translateX(0);
                 opacity: 0;
             }
             10% {
                 opacity: 1;
             }
+            25% {
+                transform: translateY(25vh) rotate(90deg) translateX(-30px);
+            }
             50% {
-                transform: translateY(50vh) translateX(-50px) rotate(180deg);
+                transform: translateY(50vh) rotate(180deg) translateX(20px);
+            }
+            75% {
+                transform: translateY(75vh) rotate(270deg) translateX(-20px);
             }
             90% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) translateX(30px) rotate(360deg);
+                transform: translateY(100vh) rotate(360deg) translateX(30px);
                 opacity: 0;
             }
         }
 
-        @keyframes floatRight {
+        @keyframes snowfallRight {
             0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
+                transform: translateY(-50px) rotate(0deg) translateX(0);
                 opacity: 0;
             }
             10% {
                 opacity: 1;
             }
+            25% {
+                transform: translateY(25vh) rotate(-90deg) translateX(30px);
+            }
             50% {
-                transform: translateY(50vh) translateX(50px) rotate(180deg);
+                transform: translateY(50vh) rotate(-180deg) translateX(-20px);
+            }
+            75% {
+                transform: translateY(75vh) rotate(-270deg) translateX(20px);
             }
             90% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) translateX(-30px) rotate(360deg);
+                transform: translateY(100vh) rotate(-360deg) translateX(-30px);
                 opacity: 0;
             }
         }
@@ -218,7 +285,7 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             animation: fadeInDown 0.8s ease;
         }
 
@@ -233,32 +300,103 @@
             }
         }
 
-        .logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        /* Новогодний баннер */
+        .ny-banner {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.9) 0%, rgba(139, 0, 0, 0.9) 100%);
             border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ny-banner::before {
+            content: '✨';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        .ny-banner::after {
+            content: '✨';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            animation: sparkle 1.5s ease-in-out infinite 0.75s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(1); }
+            50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+        }
+
+        .ny-banner-text {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .ny-banner-text span {
+            color: var(--gold);
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             font-weight: 900;
             color: var(--white);
+            box-shadow: 0 10px 30px rgba(196, 30, 58, 0.4);
+            position: relative;
+            border: 3px solid rgba(255, 215, 0, 0.5);
             letter-spacing: -1px;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--gold);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 15px var(--gold); }
+            50% { box-shadow: 0 0 25px var(--gold), 0 0 35px rgba(255, 215, 0, 0.5); }
         }
 
         .header-title {
             font-size: 32px;
             font-weight: 700;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 12px;
             letter-spacing: -1px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
 
         .header-subtitle {
             font-size: 16px;
-            color: var(--gray-500);
+            color: rgba(255, 255, 255, 0.7);
             font-weight: 400;
         }
 
@@ -276,7 +414,7 @@
         .progress-label {
             font-size: 13px;
             font-weight: 600;
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 12px;
@@ -284,40 +422,67 @@
 
         .progress-bar-bg {
             height: 4px;
-            background: var(--gray-200);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 2px;
             overflow: hidden;
         }
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(90deg, var(--christmas-red) 0%, var(--gold) 100%);
             border-radius: 2px;
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         /* Section Title */
         .section-title {
             font-size: 24px;
             font-weight: 700;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 32px;
             letter-spacing: -0.5px;
             animation: fadeIn 0.8s ease 0.3s backwards;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         /* Vacancy Card */
         .vacancy-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(229, 229, 229, 0.5);
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             padding: 28px;
             margin-bottom: 16px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeInUp 0.6s ease backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vacancy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--christmas-red), var(--gold), var(--christmas-green), var(--gold), var(--christmas-red));
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .vacancy-card:hover::before {
+            opacity: 1;
         }
 
         @keyframes fadeInUp {
@@ -344,16 +509,21 @@
         .vacancy-card:hover {
             transform: translateY(-4px);
             box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.08),
-                0 0 0 1px var(--gray-100);
-            border-color: var(--gray-300);
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
         }
 
         .vacancy-card.selected {
             border-color: var(--gold);
             box-shadow: 
-                0 20px 40px rgba(212, 175, 55, 0.15),
-                0 0 0 2px var(--gold);
+                0 20px 40px rgba(255, 215, 0, 0.2),
+                0 0 0 2px var(--gold),
+                0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .vacancy-card.selected::before {
+            opacity: 1;
         }
 
         .vacancy-header {
@@ -367,7 +537,7 @@
             width: 48px;
             height: 48px;
             flex-shrink: 0;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -376,6 +546,7 @@
             font-weight: 700;
             color: var(--white);
             letter-spacing: -0.5px;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
         }
 
         .vacancy-info {
@@ -385,7 +556,7 @@
         .vacancy-name {
             font-size: 18px;
             font-weight: 600;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 6px;
             letter-spacing: -0.3px;
         }
@@ -393,13 +564,14 @@
         .vacancy-salary {
             font-size: 15px;
             font-weight: 600;
-            color: var(--gold-dark);
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         .vacancy-description {
             font-size: 14px;
             line-height: 1.7;
-            color: var(--gray-500);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Form Section */
@@ -417,7 +589,7 @@
             display: block;
             font-size: 13px;
             font-weight: 600;
-            color: var(--gray-900);
+            color: var(--white);
             margin-bottom: 10px;
             letter-spacing: 0.3px;
         }
@@ -426,31 +598,32 @@
             width: 100%;
             height: 56px;
             padding: 16px 20px;
-            background: var(--white);
-            border: 1px solid var(--gray-300);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             font-size: 16px;
             font-weight: 400;
-            color: var(--black);
+            color: var(--white);
             font-family: inherit;
             transition: all 0.3s ease;
         }
 
         .form-input::placeholder {
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
         }
 
         /* Submit Button */
         .submit-btn {
             width: 100%;
             height: 56px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
             border: none;
             border-radius: 12px;
             color: var(--white);
@@ -460,11 +633,29 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 32px;
+            box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 12px 32px rgba(196, 30, 58, 0.5);
         }
 
         .submit-btn:active {
@@ -477,7 +668,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, var(--white) 80%, transparent);
+            background: linear-gradient(to top, rgba(10, 22, 40, 0.95) 80%, transparent);
             padding: 24px;
             display: none;
             z-index: 200;
@@ -501,10 +692,10 @@
             margin: 0 auto;
             display: block;
             height: 56px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: none;
+            border: 2px solid rgba(255, 215, 0, 0.3);
             border-radius: 12px;
             color: var(--white);
             font-size: 16px;
@@ -512,13 +703,14 @@
             letter-spacing: 0.3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
         }
 
         .apply-btn:hover {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.95) 0%, rgba(184, 148, 31, 0.95) 100%);
+            background: linear-gradient(135deg, #d42a4a 0%, #a00020 100%);
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 12px 32px rgba(196, 30, 58, 0.5);
+            border-color: rgba(255, 215, 0, 0.5);
         }
 
         .apply-btn:active {
@@ -548,7 +740,7 @@
         .step-number {
             font-size: 14px;
             font-weight: 600;
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 16px;
@@ -557,37 +749,38 @@
         .step-question {
             font-size: 24px;
             font-weight: 700;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 40px;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .step-input {
             width: 100%;
             height: 60px;
             padding: 18px 24px;
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(212, 212, 212, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             font-size: 18px;
             font-weight: 500;
-            color: var(--black);
+            color: var(--white);
             font-family: inherit;
             transition: all 0.3s ease;
             margin-bottom: 24px;
         }
 
         .step-input::placeholder {
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .step-input:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
         }
 
         .step-buttons {
@@ -598,12 +791,12 @@
         .btn-back {
             flex: 1;
             height: 56px;
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(212, 212, 212, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            color: var(--gray-900);
+            color: var(--white);
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -611,14 +804,14 @@
         }
 
         .btn-back:hover {
-            background: rgba(245, 245, 245, 0.85);
-            border-color: var(--gray-400);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .btn-next {
             flex: 2;
             height: 56px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.85) 0%, rgba(184, 148, 31, 0.85) 100%);
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: none;
@@ -628,12 +821,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
         }
 
         .btn-next:hover {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.95) 0%, rgba(184, 148, 31, 0.95) 100%);
+            background: linear-gradient(135deg, #d42a4a 0%, #a00020 100%);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.5);
         }
 
         .btn-next:disabled {
@@ -646,12 +840,12 @@
         .btn-auto-username {
             width: 100%;
             padding: 14px;
-            background: rgba(245, 245, 245, 0.7);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(229, 229, 229, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            color: var(--gray-900);
+            color: var(--white);
             font-size: 15px;
             font-weight: 500;
             cursor: pointer;
@@ -664,7 +858,7 @@
         }
 
         .btn-auto-username:hover {
-            background: rgba(229, 229, 229, 0.8);
+            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-1px);
         }
 
@@ -684,7 +878,7 @@
             width: 80px;
             height: 80px;
             margin: 0 auto 32px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, var(--christmas-green) 0%, #1a6b1a 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -692,6 +886,7 @@
             font-size: 40px;
             color: var(--white);
             animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(34, 139, 34, 0.4);
         }
 
         @keyframes scaleIn {
@@ -708,26 +903,26 @@
         .success-title {
             font-size: 28px;
             font-weight: 700;
-            color: var(--black);
+            color: var(--white);
             margin-bottom: 12px;
             letter-spacing: -0.5px;
         }
 
         .success-text {
             font-size: 16px;
-            color: var(--gray-500);
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
         }
 
         /* Error Message */
         .error-message {
             display: none;
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 12px;
             padding: 16px;
             margin-top: 16px;
-            color: #dc2626;
+            color: #fca5a5;
             font-size: 14px;
             font-weight: 500;
         }
@@ -745,8 +940,8 @@
 
         /* Age Warning Message */
         .age-warning {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.4);
             border-radius: 12px;
             padding: 20px;
             margin-top: 20px;
@@ -761,13 +956,13 @@
         .age-warning-title {
             font-size: 16px;
             font-weight: 700;
-            color: #92400e;
+            color: #fcd34d;
             margin-bottom: 12px;
         }
 
         .age-warning-text {
             font-size: 14px;
-            color: #78350f;
+            color: #fde68a;
             margin-bottom: 16px;
             line-height: 1.6;
         }
@@ -779,15 +974,15 @@
         .alternative-title {
             font-size: 13px;
             font-weight: 600;
-            color: var(--gray-900);
+            color: var(--white);
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .alt-vacancy-card {
-            background: var(--white);
-            border: 1px solid var(--gray-300);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             padding: 12px 16px;
             margin-bottom: 8px;
@@ -800,22 +995,22 @@
 
         .alt-vacancy-card:hover {
             border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(255, 215, 0, 0.1);
         }
 
         .alt-vacancy-name {
             font-size: 14px;
             font-weight: 600;
-            color: var(--black);
+            color: var(--white);
         }
 
         .alt-vacancy-age {
             font-size: 12px;
-            color: var(--gray-500);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .alt-vacancy-select {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, var(--christmas-red) 0%, #8b0000 100%);
             color: var(--white);
             border: none;
             border-radius: 6px;
@@ -828,7 +1023,7 @@
         /* Divider */
         .divider {
             height: 1px;
-            background: var(--gray-200);
+            background: rgba(255, 255, 255, 0.1);
             margin: 48px 0;
         }
 
@@ -965,11 +1160,103 @@
                 margin: 32px 0;
             }
         }
+
+        /* Гирлянда */
+        .garland {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .light {
+            width: 12px;
+            height: 18px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: glow-light 1.5s ease-in-out infinite alternate;
+            position: relative;
+            top: -3px;
+        }
+
+        .light::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .light:nth-child(1) { background: #ff4444; box-shadow: 0 0 15px #ff4444, 0 0 30px #ff4444; animation-delay: 0s; }
+        .light:nth-child(2) { background: #ffd700; box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700; animation-delay: 0.1s; }
+        .light:nth-child(3) { background: #44ff44; box-shadow: 0 0 15px #44ff44, 0 0 30px #44ff44; animation-delay: 0.2s; }
+        .light:nth-child(4) { background: #4444ff; box-shadow: 0 0 15px #4444ff, 0 0 30px #4444ff; animation-delay: 0.3s; }
+        .light:nth-child(5) { background: #ff44ff; box-shadow: 0 0 15px #ff44ff, 0 0 30px #ff44ff; animation-delay: 0.4s; }
+        .light:nth-child(6) { background: #ff4444; box-shadow: 0 0 15px #ff4444, 0 0 30px #ff4444; animation-delay: 0.5s; }
+        .light:nth-child(7) { background: #ffd700; box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700; animation-delay: 0.6s; }
+        .light:nth-child(8) { background: #44ff44; box-shadow: 0 0 15px #44ff44, 0 0 30px #44ff44; animation-delay: 0.7s; }
+        .light:nth-child(9) { background: #4444ff; box-shadow: 0 0 15px #4444ff, 0 0 30px #4444ff; animation-delay: 0.8s; }
+        .light:nth-child(10) { background: #ff44ff; box-shadow: 0 0 15px #ff44ff, 0 0 30px #ff44ff; animation-delay: 0.9s; }
+        .light:nth-child(11) { background: #ff4444; box-shadow: 0 0 15px #ff4444, 0 0 30px #ff4444; animation-delay: 1s; }
+        .light:nth-child(12) { background: #ffd700; box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd700; animation-delay: 1.1s; }
+        .light:nth-child(13) { background: #44ff44; box-shadow: 0 0 15px #44ff44, 0 0 30px #44ff44; animation-delay: 1.2s; }
+        .light:nth-child(14) { background: #4444ff; box-shadow: 0 0 15px #4444ff, 0 0 30px #4444ff; animation-delay: 1.3s; }
+        .light:nth-child(15) { background: #ff44ff; box-shadow: 0 0 15px #ff44ff, 0 0 30px #ff44ff; animation-delay: 1.4s; }
+
+        @keyframes glow-light {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Дополнительные снежинки для большего эффекта */
+        .extra-snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
-    <!-- Floating Bubbles Background -->
+    <!-- Гирлянда сверху -->
+    <div class="garland">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+
+    <!-- Floating Snowflakes Background -->
     <div class="bubbles-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
         <div class="bubble"></div>
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -990,8 +1277,8 @@
             <p class="header-subtitle">Оберіть напрямок і залиште заявку</p>
         </div>
 
-        <!-- Progress -->
-        <div class="progress-wrapper" id="progressWrapper">
+        <!-- Progress (скрытый до начала заполнения формы) -->
+        <div class="progress-wrapper" id="progressWrapper" style="display: none;">
             <div class="progress-label">Крок <span id="stepNumber">1</span> з 6</div>
             <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="progressFill" style="width: 0%"></div>
@@ -1252,7 +1539,6 @@
             // Hide vacancies and button
             document.getElementById('vacanciesSection').style.display = 'none';
             document.getElementById('applyBtnWrapper').style.display = 'none';
-            document.getElementById('progressWrapper').style.display = 'none';
             
             // Show step form
             document.getElementById('stepForm').classList.add('active');
@@ -1269,7 +1555,7 @@
             document.getElementById('stepForm').classList.remove('active');
             document.getElementById('vacanciesSection').style.display = 'block';
             document.getElementById('applyBtnWrapper').style.display = 'block';
-            document.getElementById('progressWrapper').style.display = 'block';
+            // progressWrapper остаётся скрытым на экране выбора вакансий
             currentFormStep = 1;
             goToStep(1);
         }
@@ -1360,13 +1646,18 @@
         const ageWarningTitle = document.getElementById('ageWarningTitle');
         const ageWarningText = document.getElementById('ageWarningText');
         const alternativeVacanciesDiv = document.getElementById('alternativeVacancies');
+        let ageWarningTimeout = null;
 
         stepAgeInput.addEventListener('input', () => {
             const value = parseInt(stepAgeInput.value);
             
-            // Скидаємо warning
+            // Скидаємо warning та таймер
             ageWarning.classList.remove('show');
             alternativeVacanciesDiv.innerHTML = '';
+            if (ageWarningTimeout) {
+                clearTimeout(ageWarningTimeout);
+                ageWarningTimeout = null;
+            }
             
             // Перевірка на порожнє значення
             if (!value) {
@@ -1377,18 +1668,22 @@
             // Перевірка на мінімальний вік (17)
             if (value < 17) {
                 nextStep2Btn.disabled = true;
-                ageWarningTitle.textContent = 'Вік не підходить';
-                ageWarningText.textContent = 'Мінімальний вік для будь-якої вакансії - 17 років.';
-                ageWarning.classList.add('show');
+                ageWarningTimeout = setTimeout(() => {
+                    ageWarningTitle.textContent = 'Вік не підходить';
+                    ageWarningText.textContent = 'Мінімальний вік для будь-якої вакансії - 17 років.';
+                    ageWarning.classList.add('show');
+                }, 1000);
                 return;
             }
             
             // Перевірка на максимальний вік (35)
             if (value > 35) {
                 nextStep2Btn.disabled = true;
-                ageWarningTitle.textContent = 'Вік не підходить';
-                ageWarningText.textContent = 'Максимальний вік для будь-якої вакансії - 35 років.';
-                ageWarning.classList.add('show');
+                ageWarningTimeout = setTimeout(() => {
+                    ageWarningTitle.textContent = 'Вік не підходить';
+                    ageWarningText.textContent = 'Максимальний вік для будь-якої вакансії - 35 років.';
+                    ageWarning.classList.add('show');
+                }, 1000);
                 return;
             }
             
@@ -1396,32 +1691,34 @@
             if (selectedVacancy && value > selectedVacancy.maxAge) {
                 nextStep2Btn.disabled = true;
                 
-                // Знаходимо підходящі вакансії
-                const suitableVacancies = vacancies.filter(v => value <= v.maxAge);
-                
-                ageWarningTitle.textContent = 'Вік не підходить для цієї вакансії';
-                ageWarningText.textContent = `На вакансію "${selectedVacancy.name}" максимальний вік - ${selectedVacancy.maxAge} років.`;
-                
-                if (suitableVacancies.length > 0) {
-                    alternativeVacanciesDiv.innerHTML = `
-                        <div class="alternative-title">Вакансії, які вам підходять:</div>
-                        ${suitableVacancies.map(v => `
-                            <div class="alt-vacancy-card" data-vacancy-id="${v.id}">
-                                <div>
-                                    <div class="alt-vacancy-name">${v.name}</div>
-                                    <div class="alt-vacancy-age">Максимальний вік: ${v.maxAge} років</div>
+                ageWarningTimeout = setTimeout(() => {
+                    // Знаходимо підходящі вакансії
+                    const suitableVacancies = vacancies.filter(v => value <= v.maxAge);
+                    
+                    ageWarningTitle.textContent = 'Вік не підходить для цієї вакансії';
+                    ageWarningText.textContent = `На вакансію "${selectedVacancy.name}" максимальний вік - ${selectedVacancy.maxAge} років.`;
+                    
+                    if (suitableVacancies.length > 0) {
+                        alternativeVacanciesDiv.innerHTML = `
+                            <div class="alternative-title">Вакансії, які вам підходять:</div>
+                            ${suitableVacancies.map(v => `
+                                <div class="alt-vacancy-card" data-vacancy-id="${v.id}">
+                                    <div>
+                                        <div class="alt-vacancy-name">${v.name}</div>
+                                        <div class="alt-vacancy-age">Максимальний вік: ${v.maxAge} років</div>
+                                    </div>
+                                    <button class="alt-vacancy-select" onclick="selectAlternativeVacancy(${v.id})">Обрати</button>
                                 </div>
-                                <button class="alt-vacancy-select" onclick="selectAlternativeVacancy(${v.id})">Обрати</button>
-                            </div>
-                        `).join('')}
-                    `;
-                } else {
-                    alternativeVacanciesDiv.innerHTML = `
-                        <div class="alt-vacancy-age">На жаль, немає підходящих вакансій для вашого віку.</div>
-                    `;
-                }
-                
-                ageWarning.classList.add('show');
+                            `).join('')}
+                        `;
+                    } else {
+                        alternativeVacanciesDiv.innerHTML = `
+                            <div class="alt-vacancy-age">На жаль, немає підходящих вакансій для вашого віку.</div>
+                        `;
+                    }
+                    
+                    ageWarning.classList.add('show');
+                }, 1000);
                 return;
             }
             
@@ -1519,9 +1816,9 @@
             
             stepTelegramInput.value = value;
             
-            // Валідація: @ + мінімум 1 літера на початку username
+            // Валідація: @ + мінімум 1 символ (літери, цифри, _)
             const username = value.substring(1); // без @
-            const isValid = username.length >= 1 && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(username);
+            const isValid = username.length >= 1 && /^[a-zA-Z0-9_]+$/.test(username);
             nextStep4Btn.disabled = !isValid;
             if (isValid) {
                 formData.telegram = value;
@@ -1639,6 +1936,91 @@
         // Init
         renderVacancies();
         updateProgress(1);
+
+        // ===== НОВОГОДНИЕ ЭФФЕКТЫ =====
+
+        // Создание конфетти при успехе
+        function createConfetti() {
+            const colors = ['#ff4444', '#ffd700', '#44ff44', '#4444ff', '#ff44ff', '#ffffff'];
+            const container = document.body;
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: ${Math.random() * 10 + 5}px;
+                        height: ${Math.random() * 10 + 5}px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        left: ${Math.random() * 100}vw;
+                        top: -20px;
+                        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                        pointer-events: none;
+                        z-index: 9999;
+                        animation: confetti-fall ${2 + Math.random() * 2}s linear forwards;
+                    `;
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // Добавляем конфетти при успехе
+        const originalShowSuccess = showSuccess;
+        showSuccess = function() {
+            originalShowSuccess();
+            createConfetti();
+        };
+
+        // Стиль для конфетти
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            @keyframes confetti-fall {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+        // Создание дополнительных снежинок динамически
+        function createExtraSnowflakes() {
+            const container = document.querySelector('.bubbles-container');
+            const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❉'];
+            
+            setInterval(() => {
+                if (document.querySelectorAll('.extra-flake').length > 30) return;
+                
+                const flake = document.createElement('div');
+                flake.className = 'extra-flake';
+                flake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+                flake.style.cssText = `
+                    position: absolute;
+                    left: ${Math.random() * 100}%;
+                    top: -20px;
+                    font-size: ${8 + Math.random() * 16}px;
+                    color: white;
+                    opacity: ${0.4 + Math.random() * 0.6};
+                    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+                    animation: snowfall ${10 + Math.random() * 10}s linear forwards;
+                    pointer-events: none;
+                `;
+                container.appendChild(flake);
+                
+                setTimeout(() => flake.remove(), 20000);
+            }, 500);
+        }
+
+        // Запускаем дополнительные снежинки
+        createExtraSnowflakes();
+
+        console.log('🎄 З Новим Роком! 🎄');
     </script>
 </body>
 </html>
