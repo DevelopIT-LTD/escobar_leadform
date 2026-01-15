@@ -1414,68 +1414,104 @@
             },
             {
                 id: 2,
-                name: "Менеджер з продажу",
+                name: "Копірайтер",
                 icon: "02",
+                salary: "Київ: 34 000₴ / Віддалено: 17 000₴",
+                description: "Створення контенту. Графік з 9 по 19, 5/2",
+                maxAge: 28,
+                vacancyType: "копик"
+            },
+            {
+                id: 3,
+                name: "Менеджер з продажу",
+                icon: "03",
                 salary: "від 60 000 грн + премії",
                 description: "Активні продажі. Високі бонуси до 100%",
                 maxAge: 35
             },
             {
-                id: 3,
+                id: 4,
                 name: "Менеджер по роботі з клієнтами",
-                icon: "03",
+                icon: "04",
                 salary: "від 55 000 грн + премії",
                 description: "Підтримка довгострокових відносин. Віддалена робота",
                 maxAge: 35
             },
             {
-                id: 4,
-                name: "HR-менеджер",
-                icon: "04",
-                salary: "від 48 000 грн + премії",
-                description: "Підбір талантів. Бонуси за закриті вакансії",
-                maxAge: 35
+                id: 5,
+                name: "Фармер аккаунтів",
+                icon: "05",
+                salary: "Київ: 34 000₴ / Віддалено: 17 000₴",
+                description: "Робота з акаунтами. Графік з 9 по 19, 5/2",
+                maxAge: 28,
+                vacancyType: "копик"
             },
             {
-                id: 5,
+                id: 6,
+                name: "HR-менеджер",
+                icon: "06",
+                salary: "від 48 000 грн + премії",
+                description: "Підбір талантів. Бонуси за закриті вакансії",
+                maxAge: 28
+            },
+            {
+                id: 7,
                 name: "Sale Manager",
-                icon: "05",
+                icon: "07",
                 salary: "від 60 000 грн + премії",
                 description: "Керування відділом. Преміальні до 150%",
                 maxAge: 35
             },
             {
-                id: 6,
+                id: 8,
                 name: "Рекрутер",
-                icon: "06",
+                icon: "08",
                 salary: "від 40 000 грн + премії",
                 description: "Пошук та підбір кандидатів. Навчання з першого дня",
-                maxAge: 35
+                maxAge: 28
             },
             {
-                id: 7,
+                id: 9,
                 name: "Менеджер по роботі з персоналом",
-                icon: "07",
+                icon: "09",
                 salary: "від 45 000 грн + премії",
                 description: "Управління командою. Кар'єрне зростання",
                 maxAge: 35
             },
             {
-                id: 8,
+                id: 10,
                 name: "Спеціаліст з комунікацій",
-                icon: "08",
+                icon: "10",
                 salary: "від 38 000 грн",
                 description: "Внутрішні та зовнішні комунікації. Гнучкий графік",
                 maxAge: 35
             },
             {
-                id: 9,
+                id: 11,
                 name: "Project Manager",
-                icon: "09",
+                icon: "11",
                 salary: "від 55 000 грн + премії",
                 description: "Управління проєктами. Робота з командою",
                 maxAge: 35
             }
+        ];
+
+        // Список країн для віддаленої роботи
+        const remoteCountries = [
+            "Armenia",
+            "Azerbaijan", 
+            "Georgia",
+            "Kazakhstan",
+            "Republic of Moldova",
+            "Thailand",
+            "Uzbekistan",
+            "Bali",
+            "Кипр",
+            "Філіппіни",
+            "Болгарія",
+            "Kyrgyzstan",
+            "В'єтнам",
+            "Індонезія"
         ];
 
         // Google Apps Script URL
@@ -1855,7 +1891,7 @@
                 city: formData.city,
                 telegram: formData.telegram,
                 phone: formData.phone || '',
-                vacancy: selectedVacancy.name
+                vacancy: selectedVacancy.vacancyType || selectedVacancy.name
             };
 
             try {
