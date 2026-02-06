@@ -1896,34 +1896,31 @@
 
             try {
                 // Відправка в Google Sheets
-                if (APPS_SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    const response = await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    console.log('Дані відправлено в Google Sheets');
-                }
-                
-                // Також відправка в Telegram bot (опціонально)
-                try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                console.log('Дані відправлено в Google Sheets');
+
+                // Якщо відкрито через Telegram WebApp - відправляємо дані в бота
+                if (tg && tg.initData && tg.initData.length > 0) {
                     tg.sendData(JSON.stringify(data));
-                } catch (e) {
-                    console.log('Telegram недоступний:', e);
+                    // sendData закриває WebApp, тому showSuccess не потрібен
+                } else {
+                    // Якщо відкрито в браузері - показуємо успіх
+                    showSuccess();
                 }
-                
-                // Показуємо success
-                showSuccess();
-                
+
             } catch (error) {
                 console.error('Помилка відправки:', error);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Відправити';
-                alert('Помилка відправки. Перевірте URL Google Apps Script та спробуйте ще раз');
+                alert('Помилка відправки');
             }
         });
 
